@@ -19,7 +19,7 @@ namespace My_Books
 {
     public class Startup
     {
-        public String ConnectionString { get; set; }
+        public string ConnectionString { get; set; }
 
         public Startup(IConfiguration configuration)
         {

@@ -20,37 +20,37 @@ namespace My_Books.Controllers
         }
 
         [HttpGet("get-all-books")]
-        public IActionResult GetAllBooks()
+        public async Task<IActionResult> GetAllBooks()
         {
-            var allBooks = _booksService.GetALLBooks();
+            var allBooks = await _booksService.GetALLBooks();
             return Ok(allBooks);
         }
 
         [HttpGet("get-book-by-id/{id}")]
-        public IActionResult GetBookById(int id)
+        public async Task<IActionResult> GetBookById(int id)
         {
-            var book = _booksService.GetBookById(id);
+            var book = await _booksService.GetBookById(id);
             return Ok(book);
         }
 
         [HttpPost("add-book")]
-        public IActionResult AddBook([FromBody]BookVM book)
+        public async Task<IActionResult> AddBook([FromBody]BookVM book)
         {
-            _booksService.AddBook(book);
+            await _booksService.AddBook(book);
             return Ok();
         }
 
         [HttpPut("update-book-by-id/{id}")]
-        public IActionResult UpdateBookById(int id, [FromBody]BookVM book)
+        public async Task<IActionResult> UpdateBookById(int id, [FromBody]BookVM book)
         {
-            var UpdatedBook = _booksService.UpdateBookById(id, book);
+            var UpdatedBook = await _booksService.UpdateBookById(id, book);
             return Ok(UpdatedBook);
         }
 
         [HttpDelete("delete-book-by-id/{id}")]
-        public IActionResult DeleteBookById(int id)
+        public async Task<IActionResult> DeleteBookById(int id)
         {
-            _booksService.DeleteBookById(id);
+            await _booksService.DeleteBookById(id);
             return Ok();
         }
     }

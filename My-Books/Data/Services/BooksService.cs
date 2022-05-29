@@ -1,4 +1,5 @@
-﻿using My_Books.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using My_Books.Data.Models;
 using My_Books.Data.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace My_Books.Data.Services
             _context = context;
         }
 
-        public void AddBook(BookVM book)
+        public async Task AddBook(BookVM book)
         {
             var _book = new Book()
             {
@@ -31,20 +32,20 @@ namespace My_Books.Data.Services
                 DateAdded = DateTime.Now
             };
             _context.Books.Add(_book);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }   
 
-        public List<Book> GetALLBooks() => _context.Books.ToList();
+        public async Task<List<Book>> GetALLBooks() => await _context.Books.ToListAsync();
         //{
         //    var allBooks = _context.Books.ToList();
         //    return allBooks;
         //}
 
-        public Book GetBookById(int bookId) => _context.Books.FirstOrDefault(n=> n.Id == bookId);
+        public async Task<Book> GetBookById(int bookId) => await _context.Books.FirstOrDefaultAsync(n=> n.Id == bookId);
 
-        public Book UpdateBookById(int bookId, BookVM book)
+        public async Task<Book> UpdateBookById(int bookId, BookVM book)
         {
-            var _book = _context.Books.FirstOrDefault(n => n.Id == bookId);
+            var _book = await _context.Books.FirstOrDefaultAsync(n => n.Id == bookId);
             if(_book != null)
             {
                 _book.Title = book.Title;
@@ -56,18 +57,18 @@ namespace My_Books.Data.Services
                 _book.Author = book.Author;
                 _book.CoverUrl = book.CoverUrl;
 
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             return _book;
         }
 
-        public void DeleteBookById(int bookId)
+        public async Task DeleteBookById(int bookId)
         {
-            var _book = _context.Books.FirstOrDefault(n => n.Id == bookId); 
+            var _book = await _context.Books.FirstOrDefaultAsync(n => n.Id == bookId); 
             if(_book != null)
             {
                 _context.Books.Remove(_book);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
     }
